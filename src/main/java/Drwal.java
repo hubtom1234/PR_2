@@ -1,40 +1,46 @@
-public class Drwal extends Thread
+import java.util.Random;
+
+public class Drwal extends Thread implements Miejsce
 {
     private Krolestwo k;
-    private int siekiery;
     private int drewno;
+    private int siekiery;
 
-    public Drwal(Krolestwo k, int siekiery, int drewno)
+    @Override
+    public synchronized void dodajDobro(String nazwa)
     {
-        this.k = k;
-        this.siekiery = siekiery;
-        this.drewno = drewno;
+        switch (nazwa)
+        {
+            case "drewno":
+                drewno++;
+                break;
+        }
+        System.out.println(this);
     }
+
 
     @Override
     public void run()
     {
-        while (true)
+        Random generator = new Random();
+        int liczbaDrwali = generator.nextInt() % 4 + 3;
+        for (int i = 0; i < liczbaDrwali; i++)
         {
-            synchronized (this)
-            {
-                try
-                {
-                    this.wait();
-                    System.out.println("Test");
-                } catch (InterruptedException ie)
-                {
-                }
-            }
-            //wycinanie drewna
-            for (Toolsmith t : this.k.getToolsmith())
-            {
-                synchronized (t)
-                {
-                    t.notify();
-                }
-            }
-            //System.out.println("J");
+            Thread watek = new Thread(new Robotnik(this,"drewno",3));
+            watek.start();
         }
+    }
+
+    public Drwal(Krolestwo k, int drewno, int siekiery)
+    {
+        this.k = k;
+        this.drewno = drewno;
+        this.siekiery = siekiery;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Stan drwala: Drewno: " + drewno + " Siekiery: " + siekiery;
     }
 }

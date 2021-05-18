@@ -1,56 +1,58 @@
 import java.util.Random;
 
-public class Kopalnia extends Thread {
+public class Kopalnia extends Thread implements Miejsce
+{
     private Krolestwo k;
     private int zelazo;
     private int kilofy;
     private int klejnoty;
+
+    @Override
+    public synchronized void dodajDobro(String nazwa)
+    {
+        switch (nazwa)
+        {
+            case "zelazo":
+                zelazo++;
+                break;
+            case "klejnoty":
+                klejnoty++;
+                break;
+        }
+        System.out.println(this);
+    }
+
+
     @Override
     public void run()
     {
-        Random generator=new Random();
-        int i=0;
-        while(i<100)
+        Random generator = new Random();
+        int liczbaKopaczyZelaza = generator.nextInt() % 4 + 3;
+        int liczbaKopaczyDiamentow = generator.nextInt() % 4 + 3;
+        for (int i = 0; i < liczbaKopaczyZelaza; i++)
         {
-            if(generator.nextInt()%2==0)
-            {
-                this.zelazo++;
-            }
-            if(generator.nextInt()%3==0)
-            {
-                this.kilofy++;
-            }
-            if(generator.nextInt()%5==0)
-            {
-                this.klejnoty++;
-            }
-            System.out.println("Zasoby kopalni: "+this.zelazo+" stali, "+this.kilofy+" kilofow, "+this.klejnoty+" klejnotow.");
-            i++;
+            Thread watek = new Thread(new Robotnik(this,"zelazo",3));
+            watek.start();
         }
-        for (Weaponsmith w:this.k.getWeaponsmith()) {
-            synchronized (w)
-            {
-                w.notify();
-            }
+        for (int i = 0; i < liczbaKopaczyDiamentow; i++)
+        {
+            Thread watek = new Thread(new Robotnik(this,"klejnoty",3));
+            watek.start();
         }
-        for (Toolsmith t:this.k.getToolsmith()) {
-            synchronized (t)
-            {
-                t.notify();
-            }
-        }
-        for (Jubiler j:this.k.getJubilerzy()) {
-            synchronized (j)
-            {
-                j.notify();
-            }
-        }
+
     }
+
     public Kopalnia(Krolestwo k, int zelazo, int kilofy, int klejnoty)
     {
-        this.k=k;
-        this.kilofy=kilofy;
-        this.klejnoty=klejnoty;
-        this.zelazo=zelazo;
+        this.k = k;
+        this.kilofy = kilofy;
+        this.klejnoty = klejnoty;
+        this.zelazo = zelazo;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Stan kopalni: Zelazo: " + zelazo + " Klejnoty: " + klejnoty + " Kilofy: " + kilofy;
     }
 }
