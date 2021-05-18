@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Ksiezniczka extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -45,11 +45,16 @@ public class Ksiezniczka extends Thread implements Miejsce
     }
 
 
+    @SneakyThrows
     @Override
     public void run()
     {
-        Thread watek = new Thread(new Robotnik(this,"szczescie",3));
-        watek.start();
+        while (!Thread.interrupted())
+        {
+            k.getJubiler().sprobujZabracDobra("blyskotki", 2);
+            this.wait(15000);
+            szczescie++;
+        }
     }
 
     public Ksiezniczka(Krolestwo k, int szczescie, int blyskotki)
@@ -62,6 +67,6 @@ public class Ksiezniczka extends Thread implements Miejsce
     @Override
     public String toString()
     {
-        return "Stan krola: Szczescie: " + szczescie + " blyskotki: " + blyskotki;
+        return "Stan ksiezniczki: Szczescie: " + szczescie + " blyskotki: " + blyskotki;
     }
 }

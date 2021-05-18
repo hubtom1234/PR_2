@@ -1,10 +1,11 @@
-import java.util.Random;
+import lombok.SneakyThrows;
+
+import java.util.ArrayList;
 
 public class Jubiler extends Thread implements Miejsce
 {
     private Krolestwo k;
     private int blyskotki;
-    private int klejnoty;
 
     @Override
     public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
@@ -43,28 +44,27 @@ public class Jubiler extends Thread implements Miejsce
     }
 
 
+    @SneakyThrows
     @Override
     public void run()
     {
-        Random generator = new Random();
-        int liczbaJubilerow = generator.nextInt() % 4 + 3;
-        for (int i = 0; i < liczbaJubilerow; i++)
+        while (!Thread.interrupted())
         {
-            Thread watek = new Thread(new Robotnik(this,"blyskotki",3));
-            watek.start();
+            k.getKopalnia().sprobujZabracDobra("klejnoty", 5);
+            this.wait(15000);
+            blyskotki++;
         }
     }
 
-    public Jubiler(Krolestwo k, int blyskotki, int klejnoty)
+    public Jubiler(Krolestwo k, int blyskotki)
     {
         this.k = k;
-        this.blyskotki=blyskotki;
-        this.klejnoty = klejnoty;
+        this.blyskotki = blyskotki;
     }
 
     @Override
     public String toString()
     {
-        return "Stan jubilera: Blyskotki: " + blyskotki + " Klejnoty: " + klejnoty;
+        return "Stan jubilera: Blyskotki: " + blyskotki;
     }
 }

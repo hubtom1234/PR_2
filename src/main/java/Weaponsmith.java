@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Weaponsmith extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -44,15 +44,15 @@ public class Weaponsmith extends Thread implements Miejsce
     }
 
 
+    @SneakyThrows
     @Override
     public void run()
     {
-        Random generator = new Random();
-        int liczbaWytworcowMieczy = generator.nextInt() % 4 + 3;
-        for (int i = 0; i < liczbaWytworcowMieczy; i++)
+        while (!Thread.interrupted())
         {
-            Thread watek = new Thread(new Robotnik(this, "miecze", 3));
-            watek.start();
+            k.getKopalnia().sprobujZabracDobra("zelazo", 4);
+            this.wait(15000);
+            miecze++;
         }
     }
 

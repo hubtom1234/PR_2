@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Drwal extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -49,11 +49,14 @@ public class Drwal extends Thread implements Miejsce
     public void run()
     {
         Random generator = new Random();
-        int liczbaDrwali = generator.nextInt() % 4 + 3;
-        for (int i = 0; i < liczbaDrwali; i++)
+        while(!Thread.interrupted())
         {
-            Thread watek = new Thread(new Robotnik(this,"drewno",3));
-            watek.start();
+            k.getToolsmith().sprobujZabracDobra("siekiery", 1);
+            int liczbaDrwali = generator.nextInt() % 4 + 3;
+            for (int i = 0; i < liczbaDrwali; i++) {
+                Thread watek = new Thread(new Robotnik(this, "drewno", 3));
+                watek.start();
+            }
         }
     }
 

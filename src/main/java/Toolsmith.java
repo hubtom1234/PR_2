@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Toolsmith extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -57,23 +57,25 @@ public class Toolsmith extends Thread implements Miejsce
     }
 
 
+    @SneakyThrows
     @Override
     public void run()
     {
-        Random generator = new Random();
-        int liczbaWytworcowSiekier = generator.nextInt() % 4 + 3;
-        int liczbaWytworcowKilofow = generator.nextInt() % 4 + 3;
-        for (int i = 0; i < liczbaWytworcowSiekier; i++)
+        Random generator=new Random();
+        while (!Thread.interrupted())
         {
-            Thread watek = new Thread(new Robotnik(this, "siekiery", 3));
-            watek.start();
+            k.getKopalnia().sprobujZabracDobra("zelazo", 3);
+            k.getDrwal().sprobujZabracDobra("drewno",3);
+            this.wait(15000);
+            if(generator.nextInt()%2==0)
+            {
+                siekiery++;
+            }
+            else
+            {
+                kilofy++;
+            }
         }
-        for (int i = 0; i < liczbaWytworcowKilofow; i++)
-        {
-            Thread watek = new Thread(new Robotnik(this, "kilofy", 3));
-            watek.start();
-        }
-
     }
 
     public Toolsmith(Krolestwo k, int zelazo, int kilofy, int siekiery, int drewno)

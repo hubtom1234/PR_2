@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Kopalnia extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -55,22 +55,23 @@ public class Kopalnia extends Thread implements Miejsce
         notifyAll();
     }
 
-
+    @SneakyThrows
     @Override
     public void run()
     {
         Random generator = new Random();
         int liczbaKopaczyZelaza = generator.nextInt() % 4 + 3;
         int liczbaKopaczyDiamentow = generator.nextInt() % 4 + 3;
-        for (int i = 0; i < liczbaKopaczyZelaza; i++)
-        {
-            Thread watek = new Thread(new Robotnik(this, "zelazo", 3));
-            watek.start();
-        }
-        for (int i = 0; i < liczbaKopaczyDiamentow; i++)
-        {
-            Thread watek = new Thread(new Robotnik(this, "klejnoty", 3));
-            watek.start();
+        while (!Thread.interrupted()) {
+            k.getToolsmith().sprobujZabracDobra("kilofy", 1);
+            for (int i = 0; i < liczbaKopaczyZelaza; i++) {
+                Thread watek = new Thread(new Robotnik(this, "zelazo", 3));
+                watek.start();
+            }
+            for (int i = 0; i < liczbaKopaczyDiamentow; i++) {
+                Thread watek = new Thread(new Robotnik(this, "klejnoty", 3));
+                watek.start();
+            }
         }
 
     }

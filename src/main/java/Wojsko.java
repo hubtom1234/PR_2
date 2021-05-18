@@ -1,7 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Wojsko extends Thread{
     private Krolestwo k;
     private int dowodzenie;

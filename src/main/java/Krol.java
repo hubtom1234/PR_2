@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import lombok.SneakyThrows;
 public class Krol extends Thread implements Miejsce
 {
     private Krolestwo k;
@@ -45,11 +45,16 @@ public class Krol extends Thread implements Miejsce
     }
 
 
+    @SneakyThrows
     @Override
     public void run()
     {
-        Thread watek = new Thread(new Robotnik(this,"dowodzenie",3));
-        watek.start();
+        while (!Thread.interrupted())
+        {
+            k.getKopalnia().sprobujZabracDobra("szczescie", 3);
+            this.wait(15000);
+            dowodzenie++;
+        }
     }
 
     public Krol(Krolestwo k, int szczescie, int dowodzenie)
