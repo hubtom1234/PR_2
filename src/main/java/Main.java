@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) throws InterruptedException
     {
-        Krolestwo k1=new Krolestwo();
+        Krolestwo k1=new Krolestwo("rigcz");
         Jubiler j=new Jubiler(k1,1,2);
         //Kopalnia kop=new Kopalnia(k1,1,2,3);
         Ksiezniczka ks=new Ksiezniczka(k1,1,2);
