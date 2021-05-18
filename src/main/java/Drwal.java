@@ -44,14 +44,14 @@ public class Drwal extends Thread implements Miejsce
         return false;
     }
 
-
+    @SneakyThrows
     @Override
     public void run()
     {
         Random generator = new Random();
         while(!Thread.interrupted())
         {
-            k.getToolsmith().sprobujZabracDobra("siekiery", 1);
+            k.getToolsmith().oddajDobra("siekiery", 1,"Drwal");
             int liczbaDrwali = generator.nextInt() % 4 + 3;
             for (int i = 0; i < liczbaDrwali; i++) {
                 Thread watek = new Thread(new Robotnik(this, "drewno", 3));

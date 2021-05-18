@@ -50,7 +50,7 @@ public class Jubiler extends Thread implements Miejsce
     {
         while (!Thread.interrupted())
         {
-            k.getKopalnia().sprobujZabracDobra("klejnoty", 5);
+            k.getKopalnia().oddajDobra("klejnoty", 5,"Jubiler");
             this.wait(15000);
             blyskotki++;
         }

@@ -50,7 +50,7 @@ public class Weaponsmith extends Thread implements Miejsce
     {
         while (!Thread.interrupted())
         {
-            k.getKopalnia().sprobujZabracDobra("zelazo", 4);
+            k.getKopalnia().oddajDobra("zelazo", 4,"Weaponsmith");
             this.wait(15000);
             miecze++;
         }

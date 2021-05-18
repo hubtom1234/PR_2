@@ -51,7 +51,7 @@ public class Krol extends Thread implements Miejsce
     {
         while (!Thread.interrupted())
         {
-            k.getKopalnia().sprobujZabracDobra("szczescie", 3);
+            k.getKopalnia().oddajDobra("szczescie", 3,"Krol");
             this.wait(15000);
             dowodzenie++;
         }

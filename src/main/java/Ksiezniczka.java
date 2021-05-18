@@ -51,7 +51,7 @@ public class Ksiezniczka extends Thread implements Miejsce
     {
         while (!Thread.interrupted())
         {
-            k.getJubiler().sprobujZabracDobra("blyskotki", 2);
+            k.getJubiler().oddajDobra("blyskotki", 2,"Ksiezniczka");
             this.wait(15000);
             szczescie++;
         }

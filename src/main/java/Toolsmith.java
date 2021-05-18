@@ -64,8 +64,8 @@ public class Toolsmith extends Thread implements Miejsce
         Random generator=new Random();
         while (!Thread.interrupted())
         {
-            k.getKopalnia().sprobujZabracDobra("zelazo", 3);
-            k.getDrwal().sprobujZabracDobra("drewno",3);
+            k.getKopalnia().oddajDobra("zelazo", 3,"Ksiezniczka");
+            k.getDrwal().oddajDobra("drewno",3,"Ksiezniczka");
             this.wait(15000);
             if(generator.nextInt()%2==0)
             {

@@ -63,7 +63,7 @@ public class Kopalnia extends Thread implements Miejsce
         int liczbaKopaczyZelaza = generator.nextInt() % 4 + 3;
         int liczbaKopaczyDiamentow = generator.nextInt() % 4 + 3;
         while (!Thread.interrupted()) {
-            k.getToolsmith().sprobujZabracDobra("kilofy", 1);
+            k.getToolsmith().oddajDobra("kilofy", 1,"Kopalnia");
             for (int i = 0; i < liczbaKopaczyZelaza; i++) {
                 Thread watek = new Thread(new Robotnik(this, "zelazo", 3));
                 watek.start();
