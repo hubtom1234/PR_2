@@ -7,10 +7,13 @@ public class Main {
         Kopalnia kop=new Kopalnia(k1,1,2,3);
         Ksiezniczka ks=new Ksiezniczka(k1,1,2);
         ArrayList<Ksiezniczka> ksl=new ArrayList<Ksiezniczka>();
-        ksl.add(ks);
-        k1.setKsiezniczki(ksl);
-        j.start();
-        ks.start();
+//        ksl.add(ks);
+//        k1.setKsiezniczki(ksl);
+//        j.start();
+//        ks.start();
+
+        Thread kopalnia = new Kopalnia(k1,10,5,5);
+        kopalnia.start();
 
         //kop.run();
     }
