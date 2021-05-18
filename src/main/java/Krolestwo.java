@@ -1,9 +1,7 @@
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-
-public class Krolestwo {
+public class Krolestwo implements Runnable{
     @Getter
     @Setter
     private String nazwa;
@@ -34,7 +32,22 @@ public class Krolestwo {
 
     public Krolestwo(String nazwa)
     {
-        this.nazwa=nazwa;
+        this.nazwa = nazwa;
+        this.drwal = new Drwal(this, 10 ,5);
+        this.jubiler = new Jubiler(this, 0);
+        this.kopalnia = new Kopalnia(this, 10, 5 , 2);
     }
 
+    @Override
+    public void run()
+    {
+        Thread kopalniaWatek = new Thread(kopalnia);
+        kopalniaWatek.start();
+
+        Thread drwalWatek = new Thread(drwal);
+        drwalWatek.start();
+
+        Thread jubilerWatek = new Thread(jubiler);
+        jubilerWatek.start();
+    }
 }

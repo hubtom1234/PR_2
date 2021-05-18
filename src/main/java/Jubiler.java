@@ -44,15 +44,24 @@ public class Jubiler extends Thread implements Miejsce
     }
 
 
-    @SneakyThrows
+
     @Override
     public void run()
     {
         while (!Thread.interrupted())
         {
-            k.getKopalnia().sprobujZabracDobra("klejnoty", 5);
-            this.wait(15000);
-            blyskotki++;
+
+            try
+            {
+                k.getKopalnia().oddajDobra("klejnoty", 5, "Jubiler");
+                Thread.sleep(15000);
+                blyskotki++;
+                System.out.println("Jubiler wytworzył błyskotke");
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
         }
     }
 
