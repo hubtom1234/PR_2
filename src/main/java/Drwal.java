@@ -41,6 +41,6 @@ public class Drwal extends Thread implements Miejsce
     @Override
     public String toString()
     {
-        return "Stan drwala: Drewno: " + drewno + ", Siekiery: " + siekiery;
+        return "Stan drwala: Drewno: " + drewno + " siekiery: " + siekiery;
     }
 }
