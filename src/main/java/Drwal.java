@@ -21,7 +21,7 @@ public class Drwal extends Thread
                 try
                 {
                     this.wait();
-                    System.out.println("Test");
+                    System.out.println("Tescik");
                 } catch (InterruptedException ie)
                 {
                 }
