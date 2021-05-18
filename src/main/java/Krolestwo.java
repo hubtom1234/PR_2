@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Krolestwo {
+    private String nazwa;
     private ArrayList<Ksiezniczka> ksiezniczki;
     private ArrayList<Jubiler> jubilerzy;
     private ArrayList<Krol> krolowie;
@@ -9,9 +10,9 @@ public class Krolestwo {
     private ArrayList<Toolsmith> toolsmith;
     private ArrayList<Weaponsmith> weaponsmith;
     private ArrayList<Kopalnia> kopalnia;
-    public Krolestwo()
+    public Krolestwo(String nazwa)
     {
-
+        this.nazwa=nazwa;
     }
     public ArrayList<Ksiezniczka> getKsiezniczki() {
         return ksiezniczki;
@@ -71,5 +72,13 @@ public class Krolestwo {
     public void setWeaponsmith(ArrayList<Weaponsmith> w)
     {
         this.weaponsmith=w;
+    }
+    public void usunWoja(int i)
+    {
+        this.wojsko.remove(i);
+    }
+    public String getNazwa()
+    {
+        return this.nazwa;
     }
 }
