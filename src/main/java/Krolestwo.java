@@ -36,8 +36,5 @@ public class Krolestwo {
     {
         this.nazwa=nazwa;
     }
-    //public void usunWoja(int i)
-    //{
-    //    this.wojsko.remove(i);
-    //}
+
 }
