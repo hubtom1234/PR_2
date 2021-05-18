@@ -7,13 +7,16 @@ public class Drwal extends Thread implements Miejsce
     private int siekiery;
 
     @Override
-    public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
+    public synchronized void dodajDobro(String nazwa)
     {
-        while (!sprobujZabracDobra(nazwa, ilosc))
+        switch (nazwa)
         {
-            wait();
+            case "drewno":
+                drewno++;
+                break;
         }
-        System.out.println(kto + " zabrał z kopani " + ilosc + " " + nazwa);
+        System.out.println(this);
+        notifyAll();
     }
 
     @Override
@@ -26,10 +29,11 @@ public class Drwal extends Thread implements Miejsce
         System.out.println(kto + " zabrał od drwala " + ilosc + " " + nazwa);
     }
 
+
     @Override
     public boolean sprobujZabracDobra(String nazwa, int ilosc)
     {
-        if (nazwa.equals("blyskotki"))
+        if (nazwa.equals("drewno"))
         {
             if (drewno >= ilosc)
             {

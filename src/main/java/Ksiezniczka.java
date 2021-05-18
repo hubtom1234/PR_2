@@ -1,34 +1,67 @@
-public class Ksiezniczka extends Thread{
+import java.util.Random;
+
+public class Ksiezniczka extends Thread implements Miejsce
+{
     private Krolestwo k;
-    private int blyskotki;
     private int szczescie;
-    public Ksiezniczka(Krolestwo k, int blyskotki, int szczescie)
+    private int blyskotki;
+
+    @Override
+    public synchronized void dodajDobro(String nazwa)
     {
-        this.k=k;
-        this.blyskotki=blyskotki;
-        this.szczescie=szczescie;
+        switch (nazwa)
+        {
+            case "szczescie":
+                szczescie++;
+                break;
+        }
+        System.out.println(this);
+        notifyAll();
     }
+
+    @Override
+    public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
+    {
+        while (!sprobujZabracDobra(nazwa, ilosc))
+        {
+            wait();
+        }
+        System.out.println(kto + " zabrał od ksiezniczki " + ilosc + " " + nazwa);
+    }
+
+
+    @Override
+    public boolean sprobujZabracDobra(String nazwa, int ilosc)
+    {
+        if (nazwa.equals("szczescie"))
+        {
+            if (szczescie >= ilosc)
+            {
+                szczescie -= ilosc;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     @Override
     public void run()
     {
-        while(true)
-        {
-            synchronized(this)
-            {
-                try
-                {
-                    this.wait();
-                }
-                catch (InterruptedException ie){}
-            }
-            this.blyskotki++;
-            System.out.println("Ksiezniczka dostala blyskotke, obecna ilosc blyskotek: "+this.blyskotki);
-            for (Krol kr:this.k.getKrolowie()) {
-                synchronized (kr)
-                {
-                    kr.notify();
-                }
-            }
-        }
+        Thread watek = new Thread(new Robotnik(this,"szczescie",3));
+        watek.start();
+    }
+
+    public Ksiezniczka(Krolestwo k, int szczescie, int blyskotki)
+    {
+        this.k = k;
+        this.szczescie = szczescie;
+        this.blyskotki = blyskotki;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Stan krola: Szczescie: " + szczescie + " blyskotki: " + blyskotki;
     }
 }
