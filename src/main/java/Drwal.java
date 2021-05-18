@@ -7,15 +7,37 @@ public class Drwal extends Thread implements Miejsce
     private int siekiery;
 
     @Override
-    public synchronized void dodajDobro(String nazwa)
+    public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
     {
-        switch (nazwa)
+        while (!sprobujZabracDobra(nazwa, ilosc))
         {
-            case "drewno":
-                drewno++;
-                break;
+            wait();
         }
-        System.out.println(this);
+        System.out.println(kto + " zabrał z kopani " + ilosc + " " + nazwa);
+    }
+
+    @Override
+    public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
+    {
+        while (!sprobujZabracDobra(nazwa, ilosc))
+        {
+            wait();
+        }
+        System.out.println(kto + " zabrał od drwala " + ilosc + " " + nazwa);
+    }
+
+    @Override
+    public boolean sprobujZabracDobra(String nazwa, int ilosc)
+    {
+        if (nazwa.equals("blyskotki"))
+        {
+            if (drewno >= ilosc)
+            {
+                drewno -= ilosc;
+                return true;
+            }
+        }
+        return false;
     }
 
 

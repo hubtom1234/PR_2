@@ -8,6 +8,38 @@ public class Kopalnia extends Thread implements Miejsce
     private int klejnoty;
 
     @Override
+    public synchronized void oddajDobra(String nazwa, int ilosc, String kto) throws InterruptedException
+    {
+        while (!sprobujZabracDobra(nazwa, ilosc))
+        {
+            wait();
+        }
+        System.out.println(kto + " zabrał z kopani " + ilosc + " " + nazwa);
+    }
+
+    @Override
+    public boolean sprobujZabracDobra(String nazwa, int ilosc)
+    {
+        if (nazwa.equals("klejnoty"))
+        {
+            if (klejnoty >= ilosc)
+            {
+                klejnoty -= ilosc;
+                return true;
+            }
+        }
+        else if (nazwa.equals("zelazo"))
+        {
+            if (zelazo >= ilosc)
+            {
+                zelazo -= ilosc;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public synchronized void dodajDobro(String nazwa)
     {
         switch (nazwa)
@@ -20,6 +52,7 @@ public class Kopalnia extends Thread implements Miejsce
                 break;
         }
         System.out.println(this);
+        notifyAll();
     }
 
 
@@ -31,12 +64,12 @@ public class Kopalnia extends Thread implements Miejsce
         int liczbaKopaczyDiamentow = generator.nextInt() % 4 + 3;
         for (int i = 0; i < liczbaKopaczyZelaza; i++)
         {
-            Thread watek = new Thread(new Robotnik(this,"zelazo",3));
+            Thread watek = new Thread(new Robotnik(this, "zelazo", 3));
             watek.start();
         }
         for (int i = 0; i < liczbaKopaczyDiamentow; i++)
         {
-            Thread watek = new Thread(new Robotnik(this,"klejnoty",3));
+            Thread watek = new Thread(new Robotnik(this, "klejnoty", 3));
             watek.start();
         }
 

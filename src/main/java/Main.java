@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args){
-        Krolestwo k1=new Krolestwo("Krolestwo");
+    public static void main(String[] args) throws InterruptedException
+    {
+        Krolestwo k1=new Krolestwo("rigcz");
         Jubiler j=new Jubiler(k1,1,2);
-        Kopalnia kop=new Kopalnia(k1,1,2,3);
+        //Kopalnia kop=new Kopalnia(k1,1,2,3);
         Ksiezniczka ks=new Ksiezniczka(k1,1,2);
         ArrayList<Ksiezniczka> ksl=new ArrayList<Ksiezniczka>();
 //        ksl.add(ks);
@@ -12,10 +13,11 @@ public class Main {
 //        j.start();
 //        ks.start();
 
-        Thread kopalnia = new Kopalnia(k1,10,5,5);
-        kopalnia.start();
-        Thread drwal=new Drwal(k1,1,2);
-        drwal.start();
+        Kopalnia kopalnia = new Kopalnia(k1,0,0,0);
+        Thread kopalniaWatek = new Thread(kopalnia);
+        kopalniaWatek.start();
+        kopalnia.oddajDobra("zelazo",5,"Arek");
+        kopalnia.oddajDobra("zelazo",5,"Darek");
 
         //kop.run();
     }
